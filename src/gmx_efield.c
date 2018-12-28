@@ -39,8 +39,7 @@ void calc_field(const char *fnTRX, atom_id **index, int gnx[],
                 t_topology *top, int nr_grps, int units,output_env_t oenv)
 {
   matrix box;
-  rvec r,d,lE;
-  rvec mu,mum,MAmu,BAmu,ORmu;
+  rvec d,lE;
   rvec *x;
   real *charges;
   t_pbc pbc;
@@ -51,14 +50,11 @@ void calc_field(const char *fnTRX, atom_id **index, int gnx[],
   FILE *FH_local;
   FILE *FH_charge;
   int molecules;
-  int n,a,u,i,nr_frames;
+  int n,a,u,nr_frames;
   int natoms;
   real dist,idist,idist3,idist2;
-  real cutoff;
   real t;
-  int count;
-  real enm2D;
-  real q,mass;  
+  real q;  
   real phi;
   rvec E;
   matrix gE;
@@ -94,6 +90,7 @@ void calc_field(const char *fnTRX, atom_id **index, int gnx[],
     fwrite(&nr_frames,sizeof(int),1,FH_field);
     fwrite(&nr_frames,sizeof(int),1,FH_pos);
     fwrite(&nr_frames,sizeof(int),1,FH_local);
+    fwrite(&box,sizeof(float),9,FH_local);
     // Loop over molecules
     for (u=0;u<molecules;u++){
       // Initalize the field info
